@@ -11,6 +11,10 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+body {
+  background-color: gainsboro;
+}
+
 .form-control, .btn {
   box-shadow: none !important;
   outline: none !important;
@@ -35,4 +39,12 @@ nav ul li {
 /* TextFilterTopBar */
 .userPageLimit {
   max-width: 10vh;
+}
+
+/* User Data Table */
+#userDataTable th {}
+
+#userDataTable td a {
+  text-decoration: none;
+  color: black;
 }

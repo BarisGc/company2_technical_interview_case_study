@@ -1,5 +1,5 @@
 import { useSelector, useDispatch, } from 'react-redux';
-import { selectFilterOption, defineUserPageLimit } from '../redux/usersSlice'
+import { selectFilterOption, defineUserPageLimit } from '../../redux/usersSlice'
 import { InputGroup, Dropdown, DropdownButton, FormControl, Col, Row, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 

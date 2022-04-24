@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { Row } from 'react-bootstrap';
-import Header from "../../components/Header";
-import TextFilterTopBar from "../../components/TextFilterTopBar";
-import UserDataTable from "../../components/UserDataTable";
+import Header from "../../components/usersData/Header";
+import TextFilterTopBar from "../../components/usersData/TextFilterTopBar";
+import UserDataTable from "../../components/usersData/UserDataTable";
 
 
 function Home() {

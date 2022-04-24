@@ -20,6 +20,7 @@ export const fetchUsers = createAsyncThunk('users/getUsers',
             const responseTwo = responses[1]
             const responesThree = responses[2]
             const mergedData = [responseOne.data, JSON.parse(responseTwo.data.replace(/\s*"job"/g, ',"job"')), responesThree.data]
+            console.log("mergedData", mergedData)
             return mergedData
         }))
         return allData
@@ -34,6 +35,7 @@ export const usersSlice = createSlice({
         users: [],
         users_detail: [],
         courses: [],
+        mergedAllData: [],
         status: 'idle',
         currentPage: 1,
         hasNextPage: true,
@@ -58,7 +60,10 @@ export const usersSlice = createSlice({
         },
         updateTableData: (state, action) => {
             state.tableData = action.payload
-        }
+        },
+        updateMergedAllData: (state, action) => {
+            state.tableData = action.payload
+        },
     },
     extraReducers: {
         [fetchUsers.pending]: (state, action) => {
@@ -78,6 +83,6 @@ export const usersSlice = createSlice({
     },
 });
 
-export const { changeUsersPage, selectFilterOption, defineUserPageLimit, updateTableData } = usersSlice.actions;
+export const { changeUsersPage, selectFilterOption, defineUserPageLimit, updateTableData, updateMergedAllData } = usersSlice.actions;
 
 export default usersSlice.reducer;

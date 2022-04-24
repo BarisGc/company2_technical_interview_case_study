@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import Loading from './Loading';
-import Error from './Error';
+import Loading from '../general/Loading';
+import Error from '../general/Error';
 
-import { fetchUsers } from "../redux/usersSlice";
-import { changeUsersPage, updateTableData } from '../redux/usersSlice'
+import { fetchUsers } from "../../redux/usersSlice";
+import { changeUsersPage, updateTableData } from '../../redux/usersSlice'
 
-import { Pagination, Col, Table } from 'react-bootstrap';
+import { Pagination, Col, Table, Button } from 'react-bootstrap';
 import moment from 'moment';
 
 
@@ -29,15 +29,14 @@ function UserDataTable() {
     const filterTypes = useSelector((state) => state.userData.filterTypes);
     const tableData = useSelector((state) => state.userData.tableData);
 
-    // console.log("users", users)
-    // console.log("usersDetail", usersDetail)
-    // console.log("courses", courses)
     //Local States
     const [activePage, setActivePage] = useState(currentPage)
 
     useEffect(() => {
-        dispatch(fetchUsers());
-    }, [dispatch])
+        if (status === 'idle') {
+            dispatch(fetchUsers());
+        }
+    }, [dispatch, status])
 
     // Pagination Calculations
     const calculatedPages = []
@@ -79,11 +78,7 @@ function UserDataTable() {
 
     // Merging & Formatting Data for Data Export(Excel File)
 
-    console.log("newTableData", tableData)
-    console.log("users", users)
-    console.log("usersDetail", usersDetail)
-    console.log("courses", courses)
-    let exportedDataTable = tableData.map((user) => {
+    let mergedData = tableData.map((user) => {
         return {
             data1: user,
             data2: usersDetail.find((userDetail) => (userDetail.user_id == user.id)),
@@ -91,7 +86,7 @@ function UserDataTable() {
         }
     })
 
-    console.log("exportedDataTable", exportedDataTable)
+    console.log("mergedData", mergedData)
     // Early Return if Error Occurs
     if (status === 'failed') {
         return <Error message={error} />
@@ -99,7 +94,7 @@ function UserDataTable() {
 
     return (
         <>
-            <Col md={{ span: 10, offset: 1 }}>
+            <Col md={{ span: 4, offset: 4 }}>
                 {/* {isLoading &&} */}
                 {status === 'loading' && <div xs={12} className='d-flex justify-content-center'><Loading /></div>}
                 {status === 'succeeded' &&
@@ -109,14 +104,18 @@ function UserDataTable() {
                             <tr>
                                 <th className="text-center align-middle fs-6">User ID</th>
                                 <th className="text-center align-middle fs-6">User Name</th>
+                                <th className="text-center align-middle fs-6">User Detail</th>
                             </tr>
                         </thead>
                         <tbody>
                             {tableData.map((user, index) => (
-                                <tr key={user.id}>
-                                    <td>{user.id}</td>
-                                    <td>{user.name}</td>
+
+                                <tr key={user.id} className=''>
+                                    <td className="text-center ">{user.id}</td>
+                                    <td className="text-center">{user.name}</td>
+                                    <td className="text-center align-middle"><Link to={`/user/${user.id}`} >Details</Link></td>
                                 </tr>
+
                             ))}
                         </tbody>
                     </Table>
@@ -148,7 +147,7 @@ function UserDataTable() {
                             </tr>
                         </thead>
                         <tbody>
-                            {exportedDataTable.map((allData, index) => (
+                            {mergedData.map((allData, index) => (
                                 <tr key={allData.data1.id}>
                                     <td className="text-end">{allData.data1.id}</td>
                                     <td>{allData.data1.name}</td>
@@ -158,6 +157,7 @@ function UserDataTable() {
                                     <td>{allData.data3.courses.course_name}</td>
                                     <td className="text-end">{moment.utc(allData.data3.courses.measured_at).format('HH:mm:ss')}</td>
                                     <td className="text-end">{allData.data3.courses.completed_at}</td>
+                                    <td><Button variant="info">Info</Button></td>
                                 </tr>
                             ))}
                         </tbody>

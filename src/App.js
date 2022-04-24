@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Container } from 'react-bootstrap';
 // Pages
 import Home from './pages/Home';
-// import Detail from './pages/Detail';
+import Detail from './pages/Detail';
 // import ImageGallery from './pages/ImageGallery';
 // import ImageGalleryDetail from './pages/ImageGalleryDetail';
 
@@ -26,8 +26,8 @@ function App() {
         <div>
           <Switch>
             <Route exact path="/" component={Home} />
-            {/* <Route path="/detail/:breed_customname" component={Detail} />
-          <Route exact path="/image_gallery" component={ImageGallery} />
+            <Route path="/user/:userID" component={Detail} />
+            {/* <Route exact path="/image_gallery" component={ImageGallery} />
           <Route path="/image_gallery/:photo_id" component={ImageGalleryDetail} /> */}
           </Switch>
         </div>
