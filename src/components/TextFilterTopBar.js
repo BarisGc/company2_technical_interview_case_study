@@ -75,7 +75,7 @@ function TextFilterTopBar() {
                         </Button>
                         <ReactHTMLTableToExcel
                             className='btn btn-info'
-                            table='userDataTable'
+                            table='userDataTableAll'
                             filename='userDataTable Excel File'
                             sheet='Sheet'
                             buttonText='Export to Excel File' />

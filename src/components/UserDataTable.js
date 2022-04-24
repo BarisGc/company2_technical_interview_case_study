@@ -10,7 +10,7 @@ import { fetchUsers } from "../redux/usersSlice";
 import { changeUsersPage, updateTableData } from '../redux/usersSlice'
 
 import { Pagination, Col, Table } from 'react-bootstrap';
-
+import moment from 'moment';
 
 
 
@@ -21,13 +21,17 @@ function UserDataTable() {
     const userPageLimit = useSelector((state) => state.userData.userPageLimit);
     const userPageOffset = useSelector((state) => state.userData.userPageOffset);
     const users = useSelector((state) => state.userData.users);
-    const usersDetail = useSelector((state) => state.userData.Users_detail);
-    const courses = useSelector((state) => state.userData.Courses);
+    const usersDetail = useSelector((state) => state.userData.users_detail);
+    const courses = useSelector((state) => state.userData.courses);
     const currentPage = useSelector((state) => state.userData.currentPage);
     const status = useSelector((state) => state.userData.status);
     const error = useSelector((state) => state.userData.error);
     const filterTypes = useSelector((state) => state.userData.filterTypes);
     const tableData = useSelector((state) => state.userData.tableData);
+
+    // console.log("users", users)
+    // console.log("usersDetail", usersDetail)
+    // console.log("courses", courses)
     //Local States
     const [activePage, setActivePage] = useState(currentPage)
 
@@ -37,10 +41,6 @@ function UserDataTable() {
 
     // Pagination Calculations
     const calculatedPages = []
-    console.log('users', users)
-    console.log('usersDetail', usersDetail)
-    console.log('courses', courses)
-    console.log('tableData', tableData)
     if (userPageLimit > 0) {
         for (let pageNumber = 1; pageNumber < (Math.ceil(users.length / userPageLimit) + 1); pageNumber++) {
             calculatedPages.push(
@@ -77,6 +77,22 @@ function UserDataTable() {
         dispatch(updateTableData(newTableData))
     }, [dispatch, userPageLimit, userPageOffset, users, filterTypes.searchName, filterTypes.userStatusFilter])
 
+    // Merging & Formatting Data for Data Export(Excel File)
+
+    console.log("newTableData", tableData)
+    console.log("users", users)
+    console.log("usersDetail", usersDetail)
+    console.log("courses", courses)
+    let exportedDataTable = tableData.map((user) => {
+        return {
+            data1: user,
+            data2: usersDetail.find((userDetail) => (userDetail.user_id == user.id)),
+            data3: courses.find((course) => (course.user_id == user.id)),
+        }
+    })
+
+    console.log("exportedDataTable", exportedDataTable)
+    // Early Return if Error Occurs
     if (status === 'failed') {
         return <Error message={error} />
     }
@@ -112,6 +128,41 @@ function UserDataTable() {
                     </Pagination>
                 }
 
+            </Col>
+
+            {/* This display-block-none table will be exported as excel file */}
+            <Col md={{ span: 10, offset: 1 }} className='d-none'>
+                {status === 'succeeded' &&
+                    // Display Users
+                    <Table striped bordered hover size="sm" className="datatable" id='userDataTableAll'>
+                        <thead >
+                            <tr>
+                                <th className="text-center align-middle fs-6">User ID</th>
+                                <th className="text-center align-middle fs-6">User Name</th>
+                                <th className="text-center align-middle fs-6">User Status</th>
+                                <th className="text-center align-middle fs-6">User Age</th>
+                                <th className="text-center align-middle fs-6">User Job</th>
+                                <th className="text-center align-middle fs-6">Course Name</th>
+                                <th className="text-center align-middle fs-6">Measured At</th>
+                                <th className="text-center align-middle fs-6">Completed At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {exportedDataTable.map((allData, index) => (
+                                <tr key={allData.data1.id}>
+                                    <td className="text-end">{allData.data1.id}</td>
+                                    <td>{allData.data1.name}</td>
+                                    <td>{allData.data1.status}</td>
+                                    <td className="text-end">{allData.data2.age}</td>
+                                    <td>{allData.data2.job}</td>
+                                    <td>{allData.data3.courses.course_name}</td>
+                                    <td className="text-end">{moment.utc(allData.data3.courses.measured_at).format('HH:mm:ss')}</td>
+                                    <td className="text-end">{allData.data3.courses.completed_at}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                }
             </Col>
         </>
     );
