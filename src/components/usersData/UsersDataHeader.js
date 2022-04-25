@@ -1,7 +1,6 @@
-import React from 'react'
 import { useSelector } from 'react-redux';
-
 import { Badge, Col } from 'react-bootstrap'
+
 function Header() {
     const users = useSelector((state) => state.userData.users);
     return (

@@ -1,9 +1,7 @@
-import { Link } from 'react-router-dom';
 import { Row } from 'react-bootstrap';
 import UserDetailsHeader from "../../components/userDetails/UserDetailsHeader";
 import UserDetailsOptionBar from "../../components/userDetails/UserDetailsOptionBar";
 import UserDetailsTable from "../../components/userDetails/UserDetailsTable";
-
 
 function Home() {
 

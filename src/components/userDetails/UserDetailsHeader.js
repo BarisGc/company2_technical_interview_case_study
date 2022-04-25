@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom'
+import { useParams, Redirect } from 'react-router-dom'
 
 import { Badge, Col } from 'react-bootstrap'
 function Header() {
@@ -12,6 +12,9 @@ function Header() {
     const findUserName = users.find((user) => (user.id == Number(userID)))
     const findUserDetail = usersDetail.find((user) => user.user_id == Number(userID))
 
+    if (!findUserName) {
+        return <Redirect to="/" />
+    }
     return (
         <Col md={{ span: 12, offset: 0 }} className='d-flex justify-content-center bg-dark text-white py-3'>
             <h1 className='text-center'>

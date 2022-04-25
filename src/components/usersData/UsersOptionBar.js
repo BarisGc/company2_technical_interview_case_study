@@ -12,7 +12,6 @@ function TextFilterTopBar() {
     const filterTypes = useSelector((state) => state.userData.filterTypes);
     const userPageLimit = useSelector((state) => state.userData.userPageLimit);
 
-    // 1.group-----------------
     // Text Search & Filter
     const handleTextSearch = (e) => {
         dispatch(selectFilterOption(
@@ -82,7 +81,6 @@ function TextFilterTopBar() {
                     </ButtonGroup>
                 </ButtonToolbar>
             </Col>
-
         </Row >
     )
 }

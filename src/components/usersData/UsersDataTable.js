@@ -1,19 +1,14 @@
-// import './styles.css';
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Loading from '../general/Loading';
-import Error from '../general/Error';
 
 import { fetchUsers } from "../../redux/usersSlice";
 import { changeUsersPage, updateTableData } from '../../redux/usersSlice'
 
 import { Pagination, Col, Table, Button } from 'react-bootstrap';
 import moment from 'moment';
-
-
-
 
 function UserDataTable() {
     // Global States & Selectors
@@ -77,20 +72,13 @@ function UserDataTable() {
     }, [dispatch, userPageLimit, userPageOffset, users, filterTypes.searchName, filterTypes.userStatusFilter])
 
     // Merging & Formatting Data for Data Export(Excel File)
-
-    let mergedData = tableData.map((user) => {
+    let mergedTableData = tableData.map((user) => {
         return {
             data1: user,
             data2: usersDetail.find((userDetail) => (userDetail.user_id == user.id)),
             data3: courses.find((course) => (course.user_id == user.id)),
         }
     })
-
-    console.log("mergedData", mergedData)
-    // Early Return if Error Occurs
-    if (status === 'failed') {
-        return <Error message={error} />
-    }
 
     return (
         <>
@@ -147,7 +135,7 @@ function UserDataTable() {
                             </tr>
                         </thead>
                         <tbody>
-                            {mergedData.map((allData, index) => (
+                            {mergedTableData.map((allData, index) => (
                                 <tr key={allData.data1.id}>
                                     <td className="text-end">{allData.data1.id}</td>
                                     <td>{allData.data1.name}</td>

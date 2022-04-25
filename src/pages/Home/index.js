@@ -1,16 +1,14 @@
-// import { Link } from 'react-router-dom';
 import { Row } from 'react-bootstrap';
-import Header from "../../components/usersData/Header";
-import TextFilterTopBar from "../../components/usersData/TextFilterTopBar";
-import UserDataTable from "../../components/usersData/UserDataTable";
-
+import UsersDataHeader from "../../components/usersData/UsersDataHeader";
+import UsersOptionBar from "../../components/usersData/UsersOptionBar";
+import UserDataTable from "../../components/usersData/UsersDataTable";
 
 function Home() {
 
     return (
         <Row>
-            <Header />
-            <TextFilterTopBar />
+            <UsersDataHeader />
+            <UsersOptionBar />
             <UserDataTable />
         </Row >
     );

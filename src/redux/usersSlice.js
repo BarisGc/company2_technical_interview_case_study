@@ -4,9 +4,6 @@ import axios from "axios";
 //Fetch Data
 export const fetchUsers = createAsyncThunk('users/getUsers',
     async () => {
-        // const res = await axios(
-        //     `https://run.mocky.io/v3/9ea07671-86ea-4b0a-9b3b-0f195ccab3a3`);
-        // return res.data
         let one = "https://run.mocky.io/v3/9ea07671-86ea-4b0a-9b3b-0f195ccab3a3"
         let two = "https://run.mocky.io/v3/0faaa10a-c0ca-4d79-944b-02bc6e00a02d"
         let three = "https://run.mocky.io/v3/041cfdde-2ef3-4a8e-b622-763613da672d"
@@ -27,8 +24,6 @@ export const fetchUsers = createAsyncThunk('users/getUsers',
     }
 );
 
-
-
 export const usersSlice = createSlice({
     name: 'userData',
     initialState: {
@@ -46,6 +41,7 @@ export const usersSlice = createSlice({
             userStatusFilter: '',
         },
         tableData: [],
+        newCourseDataForUser: [],
     },
     reducers: {
         changeUsersPage: (state, action) => {
@@ -63,6 +59,24 @@ export const usersSlice = createSlice({
         },
         updateMergedAllData: (state, action) => {
             state.tableData = action.payload
+        },
+        changeUserName: (state, action) => {
+            const { userID, name } = action.payload
+            state.users.find((user) => (user.id == userID)).name = name
+        },
+        changeUserDetails: (state, action) => {
+            const { userID, age, job } = action.payload
+            state.users_detail.find((userDetail) => (userDetail.user_id == userID)).age = age
+            state.users_detail.find((userDetail) => (userDetail.user_id == userID)).job = job
+        },
+        assignNewCourseToUser: (state, action) => {
+            const { userID, course_name, measured_at, completed_at } = action.payload
+            state.newCourseDataForUser.push({
+                userID: userID,
+                course_name: course_name,
+                measured_at: measured_at,
+                completed_at: completed_at,
+            })
         },
     },
     extraReducers: {
@@ -83,6 +97,6 @@ export const usersSlice = createSlice({
     },
 });
 
-export const { changeUsersPage, selectFilterOption, defineUserPageLimit, updateTableData, updateMergedAllData } = usersSlice.actions;
+export const { changeUsersPage, selectFilterOption, defineUserPageLimit, updateTableData, updateMergedAllData, changeUserName, changeUserDetails, assignNewCourseToUser } = usersSlice.actions;
 
 export default usersSlice.reducer;
