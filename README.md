@@ -1,8 +1,8 @@
 # Project Name: *company2_technical_interview_case* 
 ### Project Deployment:
-Please, click > [Netlify](https://weather-app-v2-barisd.netlify.app)
+Please, click > [Netlify](https://frontend-developer-case-study.netlify.app/)
 ### Frameworks/Libraries:
-- React, React-Redux, Redux-Toolkit, React-Bootstrap, Axios, Moment, React-Select
+- React, React-Redux, Redux-Toolkit, React-Router, React-Bootstrap, Axios, Formik, Yup, Moment, React-Html-Table-To-Excel
 ### Other Tools:
 - Postman, VS Code
 ### Mobile-Responsive:
