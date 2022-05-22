@@ -1,4 +1,4 @@
-# Project Name: *company2_technical_interview_case* 
+# Project Name: *company2_technical_interview_case_study* 
 ### Project Deployment:
 Please, click > [Netlify](https://frontend-developer-case-study.netlify.app/)
 ### Frameworks/Libraries:
