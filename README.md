@@ -1,4 +1,6 @@
-# Project Name: *company2_technical_interview_case_study* 
+# Project Name: *company2_technical_interview_case_study*
+## Case:
+Click > [PDF](https://drive.google.com/file/d/1iwlKQMXujpECXqj7Zxmzn2Atm-I12MSJ/view?usp=sharing)
 ### Project Deployment:
 Please, click > [Netlify](https://frontend-developer-case-study.netlify.app/)
 ### Frameworks/Libraries:
